@@ -48,5 +48,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\JealDeployment\JealDeployment.csproj">
+      <Project>{70c90277-b78f-4a59-95bb-2baec0856d61}</Project>
+      <Name>JealDeployment</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
