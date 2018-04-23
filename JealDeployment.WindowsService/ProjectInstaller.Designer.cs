@@ -1,4 +1,4 @@
-﻿namespace JealDeployment.Service
+﻿namespace JealDeployment.WindowsService
 {
     partial class ProjectInstaller
     {

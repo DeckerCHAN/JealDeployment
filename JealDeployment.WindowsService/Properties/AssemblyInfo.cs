@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("JealDeployment.Service")]
+[assembly: AssemblyTitle("JealDeployment.WindowsService")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("JealDeployment.Service")]
+[assembly: AssemblyProduct("JealDeployment.WindowsService")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("17c1261b-9a8b-472f-8ec9-00b58d15a322")]
+[assembly: Guid("7dcf14b6-c18d-434d-ab1c-fbd468d2be64")]
 
 // Version information for an assembly consists of the following four values:
 //

@@ -5,7 +5,7 @@ using System.ServiceProcess;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JealDeployment.Service
+namespace JealDeployment.WindowsService
 {
     static class Program
     {

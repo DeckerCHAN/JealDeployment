@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2024
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JealDeployment.Service", "JealDeployment.Service\JealDeployment.Service.csproj", "{17C1261B-9A8B-472F-8EC9-00B58D15A322}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JealDeployment", "JealDeployment\JealDeployment.csproj", "{70C90277-B78F-4A59-95BB-2BAEC0856D61}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JealDeployment.Console", "JealDeployment.Console\JealDeployment.Console.csproj", "{F2005AA2-E94E-45F2-A539-974EBE4A057C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JealDeployment.WindowsService", "JealDeployment.WindowsService\JealDeployment.WindowsService.csproj", "{7DCF14B6-C18D-434D-AB1C-FBD468D2BE64}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,10 +15,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{17C1261B-9A8B-472F-8EC9-00B58D15A322}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{17C1261B-9A8B-472F-8EC9-00B58D15A322}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{17C1261B-9A8B-472F-8EC9-00B58D15A322}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{17C1261B-9A8B-472F-8EC9-00B58D15A322}.Release|Any CPU.Build.0 = Release|Any CPU
 		{70C90277-B78F-4A59-95BB-2BAEC0856D61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{70C90277-B78F-4A59-95BB-2BAEC0856D61}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{70C90277-B78F-4A59-95BB-2BAEC0856D61}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -27,6 +23,10 @@ Global
 		{F2005AA2-E94E-45F2-A539-974EBE4A057C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F2005AA2-E94E-45F2-A539-974EBE4A057C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F2005AA2-E94E-45F2-A539-974EBE4A057C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7DCF14B6-C18D-434D-AB1C-FBD468D2BE64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DCF14B6-C18D-434D-AB1C-FBD468D2BE64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DCF14B6-C18D-434D-AB1C-FBD468D2BE64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DCF14B6-C18D-434D-AB1C-FBD468D2BE64}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
