@@ -1,6 +1,6 @@
 ﻿namespace JealDeployment.Utils
 {
-    public class Class1
+    public class CommonUtils
     {
     }
 }
