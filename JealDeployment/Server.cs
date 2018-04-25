@@ -9,11 +9,11 @@ using JealDeployment.Services;
 
 namespace JealDeployment
 {
-    public class Server
+    public sealed class Server
     {
         public Server()
         {
-            this.Host = new ServiceHost(typeof(HelloWorldService));
+            this.Host = new ServiceHost(typeof(DeploymentService));
         }
 
         private ServiceHost Host { get; set; }
@@ -22,14 +22,14 @@ namespace JealDeployment
         {
             #region
 
-            this.Host.AddServiceEndpoint(typeof(IHelloWorld), new WSHttpBinding(),
-                "http://127.0.0.1:5858/HelloWorldService");
+            this.Host.AddServiceEndpoint(typeof(IDeploy), new WSHttpBinding(),
+                "http://127.0.0.1:5858/DeploymentService");
             if (this.Host.Description.Behaviors.Find<ServiceMetadataBehavior>() == null)
             {
                 var behavior = new ServiceMetadataBehavior
                 {
                     HttpGetEnabled = true,
-                    HttpGetUrl = new Uri("http://127.0.0.1:5858/HelloWorldService/metadata")
+                    HttpGetUrl = new Uri("http://127.0.0.1:5858/DeploymentService/metadata")
                 };
                 this.Host.Description.Behaviors.Add(behavior);
             }

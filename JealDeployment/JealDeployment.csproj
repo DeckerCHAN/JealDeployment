@@ -43,12 +43,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Client.cs" />
-    <Compile Include="Proxys\HelloWorldServiceClientProxy.cs" />
+    <Compile Include="Entites\Backup.cs" />
+    <Compile Include="Entites\Config\ServerConfig.cs" />
+    <Compile Include="Entites\Config\ClientConfig.cs" />
+    <Compile Include="Entites\Consiquence.cs" />
+    <Compile Include="Entites\Deployment.cs" />
+    <Compile Include="Entites\DuplicateNameingRule.cs" />
+    <Compile Include="Proxys\DeployServiceClientProxy.cs" />
     <Compile Include="Server.cs" />
-    <Compile Include="Services\HelloWorldService.cs" />
-    <Compile Include="Services\IHelloWorld.cs" />
+    <Compile Include="Services\DeploymentService.cs" />
+    <Compile Include="Services\IDeploy.cs" />
     <Compile Include="Utils\CommonUtils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils\DefaultConfigs.cs" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />

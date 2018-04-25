@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,7 +12,7 @@ namespace JealDeployment.Console
     {
         public static void Main(string[] args)
         {
-            if (args.Length != 1)
+            if (args.Length < 1)
             {
                 System.Console.WriteLine("Running mode nees to be specified.");
                 return;
@@ -27,9 +29,10 @@ namespace JealDeployment.Console
                 }
                 case "-client":
                 {
-                    var client = new Client();
-                    var content = client.Fetch();
-                    System.Console.WriteLine(content);
+                    var config = args[1];
+                    var client = new Client(IPAddress.Parse("127.0.0.1"), 5858);
+                    var deployResult = client.TryDeploy(folder);
+                    System.Console.WriteLine(deployResult);
                     break;
                 }
                 default:
