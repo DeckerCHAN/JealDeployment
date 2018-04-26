@@ -12,6 +12,8 @@ namespace JealDeployment.Entites.Config
         public string Port { get; set; }
         public string ProjectName { get; set; }
         public string DateFormat { get; set; }
+        public string Desination { get; set; }
+        public ICollection<Deploy> Deploys { get; set; }
         public ICollection<Backup> LocalBackups { get; set; }
         public ICollection<Backup> DeployBackups { get; set; }
         public ICollection<Backup> ShapshotBackups { get; set; }

@@ -32,6 +32,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression, Version=4.1.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
@@ -47,6 +49,7 @@
     <Compile Include="Entites\Config\ServerConfig.cs" />
     <Compile Include="Entites\Config\ClientConfig.cs" />
     <Compile Include="Entites\Consiquence.cs" />
+    <Compile Include="Entites\Deploy.cs" />
     <Compile Include="Entites\Deployment.cs" />
     <Compile Include="Entites\DuplicateNameingRule.cs" />
     <Compile Include="Proxys\DeployServiceClientProxy.cs" />
@@ -55,7 +58,7 @@
     <Compile Include="Services\IDeploy.cs" />
     <Compile Include="Utils\CommonUtils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utils\DefaultConfigs.cs" />
+    <Compile Include="Utils\FileUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />

@@ -31,7 +31,7 @@ namespace JealDeployment.Console
                 {
                     var config = args[1];
                     var client = new Client(IPAddress.Parse("127.0.0.1"), 5858);
-                    var deployResult = client.TryDeploy(folder);
+                    var deployResult = client.DeployToRemote(folder);
                     System.Console.WriteLine(deployResult);
                     break;
                 }
