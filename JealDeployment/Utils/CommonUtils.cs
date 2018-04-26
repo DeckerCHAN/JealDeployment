@@ -18,10 +18,5 @@ namespace JealDeployment.Utils
                 }
             }
         }
-
-        public static ClientConfig DefaultConfig()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

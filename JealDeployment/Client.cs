@@ -35,13 +35,11 @@ namespace JealDeployment
 
         private ClientConfig Config { get; set; }
 
-
         private DeployServiceClientProxy Proxy { get; set; }
-                  
+
         public string DeployToRemote(string file)
         {
             //Check
-
             if (!File.Exists(file) || Path.GetExtension(file)?.ToLower() != "zip")
             {
                 throw new ArgumentException();
@@ -50,16 +48,18 @@ namespace JealDeployment
             //Compose
             var tempFolder = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString("N"));
 
-            var zipFileName = Path.Combine(tempFolder,$"{this.Config.ProjectName}{DateTime.Now.ToString(this.Config.DateFormat)}.zip");
+            var zipFileName = Path.Combine(tempFolder,
+                $"{this.Config.ProjectName}{DateTime.Now.ToString(this.Config.DateFormat)}.zip");
 
-            ZipFile.CreateFromDirectory(file,zipFileName);
+            ZipFile.CreateFromDirectory(file, zipFileName);
 
             //Local backup
             foreach (var backup in this.Config.LocalBackups)
             {
-                
+                FileUtils.BackupTo(zipFileName, backup);
             }
 
+            //Parepare deployment package
             var ms = new MemoryStream();
             using (var fs = new FileStream(zipFileName, FileMode.Open))
             {
@@ -70,9 +70,14 @@ namespace JealDeployment
             {
                 Destination = this.Config.Desination,
                 Hash = CommonUtils.CalculateMd5(zipFileName),
-                ZipFile = ms
+                ZipFile = ms,
+                DeployBackups = this.Config.DeployBackups,
+                ShapshotBackups = this.Config.ShapshotBackups,
+                Deploys = this.Config.Deploys
             });
-            return res.DeployLog;
+
+            //Collect deploy logs.
+            return res.DeployLog.Aggregate((i, j) => i + Environment.NewLine + j);
         }
     }
 }

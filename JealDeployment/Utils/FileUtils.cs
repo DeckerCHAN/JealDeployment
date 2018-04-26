@@ -12,10 +12,19 @@ namespace JealDeployment.Utils
     {
         public static void BackupTo(string file, Backup backup)
         {
+            var destionationFileName = Path.Combine(backup.DesinationFolder,
+                Path.GetFileName(file) ?? throw new InvalidOperationException("File name can not be null or empty."));
+            destionationFileName = DuplicateNaming(destionationFileName, backup.DuplicateNameingRule);
+            File.Copy(file, destionationFileName);
         }
 
         private static string DuplicateNaming(string originName, DuplicateNameingRule rule)
         {
+            if (!File.Exists(originName))
+            {
+                return originName;
+            }
+
             switch (rule)
             {
                 case DuplicateNameingRule.GuidAtEnd:
@@ -47,7 +56,7 @@ namespace JealDeployment.Utils
             //TODO: Support better renaming
             for (var i = 65; i <= 90; i++)
             {
-                var newName = Path.Combine(folder??"", string.Format($"{filename}{(char) i}.{extensionName}"));
+                var newName = Path.Combine(folder ?? "", string.Format($"{filename}{(char) i}.{extensionName}"));
                 if (!File.Exists(newName))
                 {
                     return newName;

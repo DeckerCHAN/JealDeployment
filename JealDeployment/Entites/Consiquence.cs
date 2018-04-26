@@ -8,6 +8,6 @@ namespace JealDeployment.Entites
 {
     public class Consiquence
     {
-        public string DeployLog { get; set; }
+        public IList<string> DeployLog { get; set; }
     }
 }

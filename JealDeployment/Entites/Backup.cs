@@ -8,7 +8,7 @@ namespace JealDeployment.Entites
 {
     public class Backup
     {
-        public string Desination { get; set; }
+        public string DesinationFolder { get; set; }
         public DuplicateNameingRule DuplicateNameingRule { get; set; }
     }
 }
