@@ -24,6 +24,11 @@ public class DeployServiceClientProxy : ClientBase<IDeploy>, IDeploy
     {
         return base.Channel.Deploy(deployment);
     }
+
+    public Consiquence DryDeploy(Deployment deployment)
+    {
+        return base.Channel.DryDeploy(deployment);
+    }
 }
 
 }

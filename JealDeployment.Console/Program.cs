@@ -5,6 +5,9 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using JealDeployment.Entites;
+using JealDeployment.Entites.Config;
+using Newtonsoft.Json;
 
 namespace JealDeployment.Console
 {
@@ -20,19 +23,68 @@ namespace JealDeployment.Console
 
             switch (args[0].ToLower())
             {
-                case "-server":
+                case "--server":
                 {
-                    var server = new Server();
+                    var configPath = args[1];
+                    var config = JsonConvert.DeserializeObject<ServerConfig>(File.ReadAllText(configPath));
+                        var server = new Server(config);
                     server.Start();
                     System.Console.ReadKey();
                     break;
                 }
-                case "-client":
+                case "--client":
                 {
-                    var config = args[1];
-                    var client = new Client(IPAddress.Parse("127.0.0.1"), 5858);
-                    var deployResult = client.DeployToRemote(folder);
+                    var configPath = args[1];
+                    var config = JsonConvert.DeserializeObject<ClientConfig>(File.ReadAllText(configPath));
+                    var client = new Client(config);
+                    string deployResult;
+
+                    if (args.Length == 4 && args[3] == "--dry")
+                    {
+                        deployResult = client.DryDeployToRemote(args[2]);
+                    }
+                    else
+                    {
+                        deployResult = client.DeployToRemote(args[2]);
+                    }
+
                     System.Console.WriteLine(deployResult);
+                    break;
+                }
+                case "--config":
+                {
+                    var serverConfig = new ServerConfig
+                    {
+                        IpAddress = "127.0.0.1",
+                        Port = "12345"
+                    };
+                    File.WriteAllText("DefaultServerConfig.json",JsonConvert.SerializeObject(serverConfig));
+
+                    var clientConfig = new ClientConfig
+                    {
+                        IpAddress = "127.0.0.1",
+                        Port = "12345",
+                        DateFormat = "ddMMyyyy",
+                        DeployBackups = new List<Backup>(new []
+                        {
+                            new Backup()
+                            {
+                                DesinationFolder = "F:\\ABC",
+                                DuplicateNameingRule = DuplicateNameingRule.UppercaseLetterAtEnd
+                            }, 
+                        }),
+                        Deploys = new List<Deploy>(new Deploy[]
+                        {
+                            new Deploy
+                            {
+                                From = "Views",
+                                To = "Views"
+                            }, 
+                        })
+                        
+
+                    };
+
                     break;
                 }
                 default:

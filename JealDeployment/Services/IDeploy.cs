@@ -16,5 +16,8 @@ namespace JealDeployment.Services
 
         [OperationContract]
         Consiquence Deploy(Deployment deployment);
+
+        [OperationContract]
+        Consiquence DryDeploy(Deployment deployment);
     }
 }

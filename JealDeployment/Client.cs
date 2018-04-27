@@ -37,40 +37,87 @@ namespace JealDeployment
 
         private DeployServiceClientProxy Proxy { get; set; }
 
-        public string DeployToRemote(string file)
+
+        public string DryDeployToRemote(string publishDirectory)
         {
             //Check
-            if (!File.Exists(file) || Path.GetExtension(file)?.ToLower() != "zip")
+            if (!Directory.Exists(publishDirectory))
             {
                 throw new ArgumentException();
             }
 
             //Compose
-            var tempFolder = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString("N"));
+            var tempFolder = FileUtils.CreateNewTempFolder();
 
-            var zipFileName = Path.Combine(tempFolder,
+            var zipFilePath = Path.Combine(tempFolder,
                 $"{this.Config.ProjectName}{DateTime.Now.ToString(this.Config.DateFormat)}.zip");
 
-            ZipFile.CreateFromDirectory(file, zipFileName);
+            ZipFile.CreateFromDirectory(publishDirectory, zipFilePath);
 
             //Local backup
             foreach (var backup in this.Config.LocalBackups)
             {
-                FileUtils.BackupTo(zipFileName, backup);
+                FileUtils.BackupTo(zipFilePath, backup);
             }
 
             //Parepare deployment package
             var ms = new MemoryStream();
-            using (var fs = new FileStream(zipFileName, FileMode.Open))
+            using (var fs = new FileStream(zipFilePath, FileMode.Open))
             {
                 fs.CopyTo(ms);
             }
 
+            //Do a deploy
+            var res = this.Proxy.DryDeploy(new Deployment
+            {
+                DestinationFolderPath = this.Config.Desination,
+                FileName = Path.GetFileName(zipFilePath),
+                Hash = CommonUtils.CalculateMd5(zipFilePath),
+                Payload = ms,
+                DeployBackups = this.Config.DeployBackups,
+                ShapshotBackups = this.Config.ShapshotBackups,
+                Deploys = this.Config.Deploys
+            });
+
+            //Collect deploy logs.
+            return res.DeployLog.Aggregate((i, j) => i + Environment.NewLine + j);
+        }
+        public string DeployToRemote(string publishDirectory)
+        {
+            //Check
+            if (!Directory.Exists(publishDirectory))
+            {
+                throw new ArgumentException();
+            }
+
+            //Compose
+            var tempFolder = FileUtils.CreateNewTempFolder();
+
+            var zipFilePath = Path.Combine(tempFolder,
+                $"{this.Config.ProjectName}{DateTime.Now.ToString(this.Config.DateFormat)}.zip");
+
+            ZipFile.CreateFromDirectory(publishDirectory, zipFilePath);
+
+            //Local backup
+            foreach (var backup in this.Config.LocalBackups)
+            {
+                FileUtils.BackupTo(zipFilePath, backup);
+            }
+
+            //Parepare deployment package
+            var ms = new MemoryStream();
+            using (var fs = new FileStream(zipFilePath, FileMode.Open))
+            {
+                fs.CopyTo(ms);
+            }
+
+            //Do a deploy
             var res = this.Proxy.Deploy(new Deployment()
             {
-                Destination = this.Config.Desination,
-                Hash = CommonUtils.CalculateMd5(zipFileName),
-                ZipFile = ms,
+                DestinationFolderPath = this.Config.Desination,
+                FileName = Path.GetFileName(zipFilePath),
+                Hash = CommonUtils.CalculateMd5(zipFilePath),
+                Payload = ms,
                 DeployBackups = this.Config.DeployBackups,
                 ShapshotBackups = this.Config.ShapshotBackups,
                 Deploys = this.Config.Deploys

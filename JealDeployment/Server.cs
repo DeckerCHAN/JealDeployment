@@ -5,16 +5,20 @@ using System.ServiceModel;
 using System.ServiceModel.Description;
 using System.Text;
 using System.Threading.Tasks;
+using JealDeployment.Entites.Config;
 using JealDeployment.Services;
 
 namespace JealDeployment
 {
     public sealed class Server
     {
-        public Server()
+        public Server(ServerConfig serverConfig)
         {
+            this.Config = serverConfig;
             this.Host = new ServiceHost(typeof(DeploymentService));
         }
+
+        private ServerConfig Config { get; set; }
 
         private ServiceHost Host { get; set; }
 
@@ -23,13 +27,14 @@ namespace JealDeployment
             #region
 
             this.Host.AddServiceEndpoint(typeof(IDeploy), new WSHttpBinding(),
-                "http://127.0.0.1:5858/DeploymentService");
+                $"http://{this.Config.IpAddress}:{this.Config.Port}/DeploymentService");
             if (this.Host.Description.Behaviors.Find<ServiceMetadataBehavior>() == null)
             {
                 var behavior = new ServiceMetadataBehavior
                 {
                     HttpGetEnabled = true,
-                    HttpGetUrl = new Uri("http://127.0.0.1:5858/DeploymentService/metadata")
+                    HttpGetUrl =
+                        new Uri($"http://{this.Config.IpAddress}:{this.Config.Port}/DeploymentService/metadata")
                 };
                 this.Host.Description.Behaviors.Add(behavior);
             }

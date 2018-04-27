@@ -9,6 +9,6 @@ namespace JealDeployment.Entites.Config
     public class ServerConfig
     {
         public string IpAddress { get; set; }
-        public long Port { get; set; }
+        public string Port { get; set; }
     }
 }
