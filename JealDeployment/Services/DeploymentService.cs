@@ -107,6 +107,11 @@ namespace JealDeployment.Services
                         attr = File.GetAttributes(difference.Item1);
                         if (attr.HasFlag(FileAttributes.Directory))
                         {
+                            //Create directory if not exists
+                            if (!Directory.Exists(difference.Item2))
+                            {
+                                Directory.CreateDirectory(difference.Item2);
+                            }
                             //Now Create all of the directories
                             foreach (string dirPath in Directory.GetDirectories(difference.Item1, "*",
                                 SearchOption.AllDirectories))
@@ -155,6 +160,7 @@ namespace JealDeployment.Services
                 using (var fs = new FileStream(zipFilePath, FileMode.CreateNew))
                 {
                     deployment.Payload.CopyTo(fs);
+                    fs.Flush();
                 }
 
                 deployLog.Add($"File wrote into temp folder.");
@@ -172,7 +178,6 @@ namespace JealDeployment.Services
                 //Do deploy backup
                 foreach (var backup in deployment.DeployBackups)
                 {
-                    FileUtils.BackupTo(zipFilePath, backup);
                     deployLog.Add($"Will backup {zipFilePath} to {backup.DesinationFolder} with {backup.DuplicateNameingRule.ToString()} mode.");
                 }
 
@@ -193,7 +198,6 @@ namespace JealDeployment.Services
                     ZipFile.CreateFromDirectory(deployment.DestinationFolderPath, snapZipFilePath);
                     foreach (var backup in deployment.ShapshotBackups)
                     {
-                        FileUtils.BackupTo(snapZipFilePath, backup);
                         deployLog.Add($"Will have snapshot backup {snapZipFilePath} to {backup.DesinationFolder} with {backup.DuplicateNameingRule.ToString()} mode.");
 
                     }

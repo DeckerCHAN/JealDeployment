@@ -67,8 +67,10 @@ namespace JealDeployment
                 fs.CopyTo(ms);
             }
 
+            ms.Position = 0L;
+
             //Do a deploy
-            var res = this.Proxy.DryDeploy(new Deployment
+            var deployment = new Deployment
             {
                 DestinationFolderPath = this.Config.Desination,
                 FileName = Path.GetFileName(zipFilePath),
@@ -77,7 +79,8 @@ namespace JealDeployment
                 DeployBackups = this.Config.DeployBackups,
                 ShapshotBackups = this.Config.ShapshotBackups,
                 Deploys = this.Config.Deploys
-            });
+            };
+            var res = this.Proxy.DryDeploy(deployment);
 
             //Collect deploy logs.
             return res.DeployLog.Aggregate((i, j) => i + Environment.NewLine + j);
@@ -110,6 +113,7 @@ namespace JealDeployment
             {
                 fs.CopyTo(ms);
             }
+            ms.Position = 0L;
 
             //Do a deploy
             var res = this.Proxy.Deploy(new Deployment()

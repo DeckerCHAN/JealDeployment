@@ -27,7 +27,7 @@ namespace JealDeployment.Console
                 {
                     var configPath = args[1];
                     var config = JsonConvert.DeserializeObject<ServerConfig>(File.ReadAllText(configPath));
-                        var server = new Server(config);
+                    var server = new Server(config);
                     server.Start();
                     System.Console.ReadKey();
                     break;
@@ -58,20 +58,37 @@ namespace JealDeployment.Console
                         IpAddress = "127.0.0.1",
                         Port = "12345"
                     };
-                    File.WriteAllText("DefaultServerConfig.json",JsonConvert.SerializeObject(serverConfig));
+                    File.WriteAllText("DefaultServerConfig.json", JsonConvert.SerializeObject(serverConfig));
 
                     var clientConfig = new ClientConfig
                     {
                         IpAddress = "127.0.0.1",
                         Port = "12345",
+                        ProjectName = "TestDeploymentProject",
                         DateFormat = "ddMMyyyy",
-                        DeployBackups = new List<Backup>(new []
+                        LocalBackups = new List<Backup>(new[]
                         {
                             new Backup()
                             {
-                                DesinationFolder = "F:\\ABC",
+                                DesinationFolder = "F:\\LocalBackup",
                                 DuplicateNameingRule = DuplicateNameingRule.UppercaseLetterAtEnd
-                            }, 
+                            },
+                        }),
+                        DeployBackups = new List<Backup>(new[]
+                        {
+                            new Backup()
+                            {
+                                DesinationFolder = "F:\\DeployBackup",
+                                DuplicateNameingRule = DuplicateNameingRule.UppercaseLetterAtEnd
+                            },
+                        }),
+                        ShapshotBackups = new List<Backup>(new[]
+                        {
+                            new Backup()
+                            {
+                                DesinationFolder = "F:\\Shapshots",
+                                DuplicateNameingRule = DuplicateNameingRule.UppercaseLetterAtEnd
+                            },
                         }),
                         Deploys = new List<Deploy>(new Deploy[]
                         {
@@ -79,11 +96,12 @@ namespace JealDeployment.Console
                             {
                                 From = "Views",
                                 To = "Views"
-                            }, 
-                        })
-                        
-
+                            },
+                        }),
+                        Desination = "F:\\DEF",
                     };
+                    File.WriteAllText("DefaultClientConfig.json", JsonConvert.SerializeObject(clientConfig,Formatting.Indented));
+
 
                     break;
                 }
@@ -92,12 +110,6 @@ namespace JealDeployment.Console
                     System.Console.WriteLine($"{args[0]} does not support.");
                     return;
                 }
-            }
-
-
-            foreach (var arg in args)
-            {
-                System.Console.Write(arg);
             }
         }
     }
